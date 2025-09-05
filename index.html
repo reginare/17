@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Happy Birthday API v2.1</title>
+    <style>
+        body { font-family: 'Courier New', monospace; background: #f0f0f0; padding: 30px; }
+        code { background: #e0e0e0; padding: 5px; }
+        .endpoint { background: #fff; margin: 15px 0; padding: 15px; border-left: 5px solid #007bff; }
+    </style>
+</head>
+<body>
+    <h1>=== HUSBAND BIRTHDAY API v2.1 ===</h1>
+    <p>Добро пожаловать в систему поздравлений. Для доступа к подарку используйте следующие методы.</p>
+    <p><strong>Base URL:</strong> <code>https://[ВашUsername].github.io/husband-birthday-api/</code></p>
+    <hr>
+
+    <div class="endpoint">
+        <h3>GET /api/memories/first-date</h3>
+        <p>Возвращает данные о первом свидании.</p>
+        <p><strong>Response:</strong> <code>200 OK</code> (при успехе)</p>
+    </div>
+
+    <div class="endpoint">
+        <h3>GET /api/reasons/why-i-love-you</h3>
+        <p>Возвращает массив причин в формате JSON. Содержит часть ключа для финального запроса.</p>
+        <p><strong>Response:</strong> <code>200 OK</code></p>
+    </div>
+
+    <div class="endpoint">
+        <h3>GET /api/puzzle/1</h3>
+        <p>Эндпоинт с первой головоломкой. Необходим для получения второй части ключа.</p>
+        <p><strong>Response:</strong> <code>200 OK</code></p>
+    </div>
+
+    <div class="endpoint">
+        <h3>GET /api/puzzle/2</h3>
+        <p>Вторая головоломка. Содержит финальную часть ключа.</p>
+        <p><strong>Response:</strong> <code>200 OK</code></p>
+    </div>
+
+    <div class="endpoint">
+        <h3>POST /api/gift</h3>
+        <p>Метод для получения координат главного подарка. Требует секретный ключ в теле запроса.</p>
+        <p><strong>Body:</strong> <code>{"auth_key": "SECRET_KEY"}</code></p>
+        <p><strong>Response:</strong> <code>200 OK</code> (при правильном ключе), <code>403 Forbidden</code> (при неверном ключе)</p>
+    </div>
+
+    <p>Удачи! Система ждет твоих запросов.</p>
+    <p>// Твоя любящая жена</p>
+</body>
+</html>
