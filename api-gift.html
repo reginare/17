@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>200 OK</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding: 50px; background: #d4edda; }
+        .hidden { display: none; }
+    </style>
+    <script>
+        function checkKey() {
+            let inputKey = document.getElementById('authKey').value;
+            // Секретный ключ, который он собрал: "42AB"
+            if (inputKey === "42AB") {
+                document.getElementById('success').classList.remove('hidden');
+                document.getElementById('error').classList.add('hidden');
+            } else {
+                document.getElementById('error').classList.remove('hidden');
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>POST /api/gift</h1>
+    <p>Для выполнения запроса требуется секретный ключ.</p>
+    <p>Введите значение параметра <code>auth_key</code>:</p>
+    <input type="text" id="authKey" placeholder="{"auth_key": ?}">
+    <button onclick="checkKey()">Выполнить запрос</button>
+
+    <div id="error" class="hidden" style="color: #721c24; background: #f8d7da; padding: 10px; margin: 20px;">
+        <h2>403 Forbidden</h2>
+        <p>Invalid auth_key. Access denied.</p>
+    </div>
+
+    <div id="success" class="hidden">
+        <h2>200 OK</h2>
+        <p>Поздравляю! Доступ к подарку получен.</p>
+        <div style="background: #fff; padding: 20px; border-radius: 10px;">
+            <pre><code>{
+  "gift_location": "Посмотри в духовке...",
+  "message": "Я тебя люблю! С днем рождения, мой гениальный муж!"
+}</code></pre>
+        </div>
+        <!-- Или здесь может быть прямое фото подарка -->
+    </div>
+</body>
+</html>
