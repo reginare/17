@@ -1,15 +1,197 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-    <title>Happy Birthday API v30.1</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мышиная магия 🎨</title>
     <style>
-        body { font-family: 'Courier New', monospace; background: #f0f0f0; padding: 30px; }
-        code { background: #e0e0e0; padding: 5px; }
-        .endpoint { background: #fff; margin: 15px 0; padding: 15px; border-left: 5px solid #007bff; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(45deg, #0d1117, #161b22, #0d1117);
+            color: #fff;
+            font-family: 'Courier New', monospace;
+            min-height: 100vh;
+            overflow: hidden;
+            cursor: none;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .header {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: rgba(22, 27, 34, 0.8);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(88, 166, 255, 0.3);
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            color: #c9d1d9;
+        }
+
+        .cursor-trail {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: currentColor;
+            pointer-events: none;
+            opacity: 0;
+            animation: particleFloat 2s ease-out forwards;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #fff;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            animation: sparkle 1s ease-out forwards;
+        }
+
+        .gradient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at var(--x) var(--y), 
+                      rgba(255, 107, 107, 0.1) 0%, 
+                      rgba(78, 205, 196, 0.1) 40%, 
+                      rgba(22, 27, 34, 0.8) 70%);
+            z-index: 1;
+            pointer-events: none;
+            transition: background 0.3s ease;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+        .shape:nth-child(2) { top: 60%; left: 80%; animation-delay: 2s; }
+        .shape:nth-child(3) { top: 40%; left: 60%; animation-delay: 4s; }
+        .shape:nth-child(4) { top: 80%; left: 30%; animation-delay: 1s; }
+        .shape:nth-child(5) { top: 30%; left: 90%; animation-delay: 3s; }
+
+        .info-box {
+            background: rgba(22, 27, 34, 0.9);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            border: 1px solid rgba(88, 166, 255, 0.2);
+        }
+
+        @keyframes glow {
+            0% { text-shadow: 0 0 20px rgba(255, 107, 107, 0.5); }
+            50% { text-shadow: 0 0 30px rgba(78, 205, 196, 0.5); }
+
+100% { text-shadow: 0 0 20px rgba(69, 183, 209, 0.5); }
+        }
+
+        @keyframes particleFloat {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(
+                    calc(var(--tx) * 100px), 
+                    calc(var(--ty) * 100px)
+                ) scale(0);
+            }
+        }
+
+        @keyframes sparkle {
+            0% {
+                opacity: 1;
+                transform: scale(0) rotate(0deg);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1.5) rotate(180deg);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0) rotate(360deg);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+        }
+
+        .circle { width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(45deg, #ff6b6b, #4ecdc4); }
+        .square { width: 40px; height: 40px; background: linear-gradient(45deg, #45b7d1, #96ceb4); }
+        .triangle { 
+            width: 0; height: 0; 
+            border-left: 25px solid transparent;
+            border-right: 25px solid transparent;
+            border-bottom: 43px solid #ff6b6b;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .header { padding: 1rem; }
+        }
     </style>
 </head>
 <body>
-    <h1>=== HUSBAND BIRTHDAY API v30.1 ===</h1>
+     <h1>=== HUSBAND BIRTHDAY API v30.1 ===</h1>
     <p>Добро пожаловать в систему поздравлений. Для доступа к подарку используйте следующие методы.</p>
     <p><strong>Base URL:</strong> <code>https://reginare.github.io/17/</code></p>
     <hr>
@@ -46,6 +228,154 @@
     </div>
 
     <p>Удачи! Система ждет твоих запросов.</p>
-    <p>// Твоя любящая жена</p>
+    <p>// Твоя любящая жена</p> <!-- Анимированный фон -->
+    <div class="gradient-bg" id="gradientBg"></div>
+    
+    <!-- Плавающие формы -->
+    <div class="floating-shapes">
+        <div class="shape circle"></div>
+        <div class="shape square"></div>
+        <div class="shape triangle"></div>
+        <div class="shape circle" style="top: 70%; left: 20%;"></div>
+        <div class="shape square" style="top: 10%; left: 50%;"></div>
+    </div>
+
+    <!-- Основной контент -->
+    <div class="container">
+        <div class="header">
+            <h1>✨ Мышиная магия ✨</h1>
+            <p>Двигайте мышкой чтобы увидеть волшебство!</p>
+            <p>Анимация следует за каждым вашим движением</p>
+        </div>
+
+        <div class="info-box">
+            <h2>🎨 Особенности анимации:</h2>
+            <p>• След от курсора с градиентным эффектом</p>
+            <p>• Частицы, разлетающиеся в разные стороны</p>
+            <p>• Мерцающие искры вокруг курсора</p>
+            <p>• Динамический фон, реагирующий на движение</p>
+            <p>• Плавающие геометрические формы</p>
+        </div>
+
+        <div class="info-box">
+            <h2>🚀 Технологии:</h2>
+            <p>• Pure CSS анимации</p>
+            <p>• JavaScript для отслеживания мыши</p>
+            <p>• CSS переменные для динамических эффектов</p>
+            <p>• Gradient backgrounds</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const body = document.body;
+            const gradientBg = document.getElementById('gradientBg');
+            let mouseX = 0;
+            let mouseY = 0;
+            let trailElements = [];
+            const maxTrailLength = 20;
+
+            // Создаем основной след курсора
+            const cursorTrail = document.createElement('div');
+            cursorTrail.className = 'cursor-trail';
+            body.appendChild(cursorTrail);
+
+            // Функция для создания частиц
+            function createParticle(x, y, color) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+                particle.style.color = color;
+                
+                // Случайное направление для частицы
+                const angle = Math.random() * Math.PI * 2;
+                const distance = Math.random() * 2 + 1;
+                particle.style.
+
+setProperty('--tx', Math.cos(angle) * distance);
+                particle.style.setProperty('--ty', Math.sin(angle) * distance);
+                
+                body.appendChild(particle);
+                
+                // Удаляем частицу после анимации
+                setTimeout(() => {
+                    particle.remove();
+                }, 2000);
+            }
+
+            // Функция для создания искр
+            function createSparkle(x, y) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = x + 'px';
+                sparkle.style.top = y + 'px';
+                body.appendChild(sparkle);
+                
+                setTimeout(() => {
+                    sparkle.remove();
+                }, 1000);
+            }
+
+            // Отслеживание движения мыши
+            document.addEventListener('mousemove', function(e) {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+
+                // Обновляем позицию основного следа
+                cursorTrail.style.left = mouseX + 'px';
+                cursorTrail.style.top = mouseY + 'px';
+
+                // Обновляем градиентный фон
+                gradientBg.style.setProperty('--x', mouseX + 'px');
+                gradientBg.style.setProperty('--y', mouseY + 'px');
+
+                // Создаем элементы следа
+                const trailElement = document.createElement('div');
+                trailElement.className = 'cursor-trail';
+                trailElement.style.left = mouseX + 'px';
+                trailElement.style.top = mouseY + 'px';
+                trailElement.style.opacity = '0.7';
+                trailElement.style.transform = 'translate(-50%, -50%) scale(1)';
+                
+                body.appendChild(trailElement);
+                trailElements.push(trailElement);
+
+                // Ограничиваем длину следа
+                if (trailElements.length > maxTrailLength) {
+                    const oldTrail = trailElements.shift();
+                    oldTrail.style.opacity = '0';
+                    setTimeout(() => oldTrail.remove(), 300);
+                }
+
+                // Создаем частицы и искры (с некоторой вероятностью)
+                if (Math.random() > 0.7) {
+                    const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4'];
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    createParticle(mouseX, mouseY, color);
+                }
+
+                if (Math.random() > 0.8) {
+                    createSparkle(mouseX, mouseY);
+                }
+            });
+
+            // Плавное исчезновение элементов следа
+setInterval(() => {
+                trailElements.forEach((element, index) => {
+                    const opacity = parseFloat(element.style.opacity || '0.7');
+                    if (opacity > 0.1) {
+                        element.style.opacity = (opacity - 0.1).toString();
+                        element.style.transform = translate(-50%, -50%) scale(${0.7 + opacity * 0.3});
+                    }
+                });
+            }, 100);
+
+            // Анимация для основного следа
+            setInterval(() => {
+                cursorTrail.style.transform = translate(-50%, -50%) scale(${1 + Math.sin(Date.now() * 0.005) * 0.2});
+            }, 50);
+        });
+    </script>
 </body>
 </html>
